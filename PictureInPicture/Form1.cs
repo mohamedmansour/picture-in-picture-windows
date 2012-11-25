@@ -22,6 +22,9 @@ namespace PictureInPicture
 
     private void InitializeMonitor()
     {
+      Screen.AllScreens.ToList().ForEach(x => screensUI.Items.Add(x.DeviceName));
+      screensUI.SelectedIndex = 0;
+
       Timer timer = new Timer();
       timer.Tick += new EventHandler(timer_Tick);
       timer.Interval = 1;
@@ -42,8 +45,7 @@ namespace PictureInPicture
         pictureBox.Image.Dispose();
       }
 
-      // Set the bitmap object to the size of the screen
-      Screen screen = Screen.AllScreens[1];
+      Screen screen = Screen.AllScreens[screensUI.SelectedIndex];
       using (Bitmap bmpScreenshot = new Bitmap(screen.Bounds.Width, screen.Bounds.Height, PixelFormat.Format32bppArgb))
       {
         using (Graphics graphics = Graphics.FromImage(bmpScreenshot))
